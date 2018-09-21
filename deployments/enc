@@ -1,0 +1,2 @@
+#!/bin/ash
+crypto-util -mode=encrypt -data=$1

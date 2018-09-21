@@ -1,0 +1,2 @@
+#!/bin/ash
+crypto-util -mode=decrypt -data=$1
