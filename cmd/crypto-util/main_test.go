@@ -1,27 +1,29 @@
 package main
 
 import (
-	"os"
 	"flag"
+	"os"
 	"testing"
 )
+
 const (
-	stringTest = "teste !@"
-	testPrivKey = "../../tests/private_nopass_test.pem"
+	stringTest  = "teste !@"
+	testPrivKey = "../../tests/privkey.pem"
+	testPubKey  = "../../tests/key.pub"
 )
 
 func TestEncrypt(t *testing.T) {
 	flag.Set("encrypt", stringTest)
-	encData, err := appMain("encrypt", stringTest, testPrivKey)
-	if (err != nil) {
+	encData, err := appMain("encrypt", stringTest, testPrivKey, testPubKey)
+	if err != nil {
 		t.Error(err)
 	}
 	if encData == "" {
 		t.Errorf("No data for process.")
 	}
 
-	decData, err := appMain("decrypt", encData, testPrivKey)
-	if (err != nil) {
+	decData, err := appMain("decrypt", encData, testPrivKey, testPubKey)
+	if err != nil {
 		t.Error(err)
 	}
 	if decData == "" {
