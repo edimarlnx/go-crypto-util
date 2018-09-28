@@ -14,7 +14,8 @@ RUN go install --ldflags '-s -w -extldflags "-static"'
 
 FROM alpine
 
-COPY tests/private_nopass_test.pem /secret-encrypt-key
+COPY tests/privkey.pem /privkey.pem
+COPY tests/key.pub /key.pub
 COPY deployments/enc deployments/dec /usr/local/bin/
 COPY --from=builder /go/bin/${PKG_NAME} /usr/local/bin/${PKG_NAME}
 

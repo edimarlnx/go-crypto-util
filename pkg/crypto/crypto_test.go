@@ -1,13 +1,15 @@
 package crypto
+
 import (
 	"fmt"
-	"testing"
 	"os"
+	"testing"
 )
 
 var libTest *UtilCrypto
+
 const DecryptedDataTest = "go crypto data"
-const EncryptedDataTest = "s/R0h1ptoPuN+RW4aMXg5VP/QIWSUDYLc+p9CeTU4eFHuyDi84xJFWGwWGVu6z26CpMiTUtDfOHbC9Bfvl9YHW+/YDi1+o1hpYriKxQT9jyGkHsoI0t9KiCdL9dtnI4AhyIncuhvJUuT+d3EkZkijkFNIhF/VEZfVfPT9O6glKPRxhWOCNeCG+5XxsvFACQWCrw2VzUV5vmMXDIYDEPvrTh/oPPeU/rciyQu6VF6jOKKljDNIhVhkmk7U1+5SN2MfzUjWMt3DCZq6EjCfovweBAv/1NHFT7Et7iL93szlwOYxzbSo34map3vTCtqPE1Rw5gnnj4/DU3dqJ1BipR4yQ=="
+const EncryptedDataTest = "FHZRYMU9aYhEQ5zHFBuVYsXsIcmSDPj9i/kqMLU76yS5jNrNb0WG1/MV3cLM5x7sAAB2kw2S20xS3XTnpi1bnXy9Hp92TJx3zjKjfzKEZ0nxR5VYtwjD1EwAsC/HC6oNa+ZBU5ivUV3APyBm58wC22Vf8XOy15+jLGDL4FS09ISY63uYH3eOlmAINMsW0XcIaZUZ/hmAHnSCio25MqNccMTZ9ZXmAGP+cva18uFOLgpVrVKUey9t2lHehdccTGOZanX4XihqL9BKCoKEPPAx/RIcxOFSr9qSB48OwT1Wnx4G+CFlHHfwO/Bn1/J8XsbJM5+26qZ84MhJxtDW1IeU1w=="
 
 func TestDecrypt(t *testing.T) {
 	value, err := libTest.Decrypt(EncryptedDataTest)
@@ -20,7 +22,6 @@ func TestDecrypt(t *testing.T) {
 	}
 }
 
-
 func TestEncrypt(t *testing.T) {
 	value, err := libTest.Encrypt(DecryptedDataTest)
 	if err != nil {
@@ -28,15 +29,15 @@ func TestEncrypt(t *testing.T) {
 		t.Error(err)
 	}
 	actualDec, _ := libTest.Decrypt(value)
-	if DecryptedDataTest !=  actualDec {
+	if DecryptedDataTest != actualDec {
 		t.Errorf("Expected '%s', actual '%s'", DecryptedDataTest, actualDec)
 	}
 }
 
-
 func TestMain(m *testing.M) {
 	libTest = &UtilCrypto{
-		PrivKey: "../../tests/private_nopass_test.pem",
+		PrivKey: "../../tests/privkey.pem",
+		PubKey:  "../../tests/key.pub",
 	}
 	code := m.Run()
 	os.Exit(code)

@@ -14,7 +14,7 @@ func (c *UtilCrypto) Decrypt(encryptedData string) (string, error) {
 		return "", err
 	}
 	decodedData, _ := base64.StdEncoding.DecodeString(encryptedData)
-	decryptedData, decryptErr := rsa.DecryptPKCS1v15(rand.Reader, privRsa, decodedData)
+	decryptedData, decryptErr := rsa.DecryptOAEP(c.getHash(), rand.Reader, privRsa, decodedData, nil)
 	if decryptErr != nil {
 		fmt.Println("Decrypt data error")
 		panic(decryptErr)

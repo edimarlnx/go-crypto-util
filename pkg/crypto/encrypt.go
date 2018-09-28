@@ -7,19 +7,17 @@ import (
 	"fmt"
 )
 
-// Encrypt encrypt data with RSA key
+// Encrypt encrypt data with RSA public key
 func (c *UtilCrypto) Encrypt(dataToEncrypt string) (string, error) {
-	privRsa, err := getPrivKey(c)
+	pubRsa, err := getPubKey(c)
 	if err != nil {
 		return "", err
 	}
-	publicRsa := &privRsa.PublicKey
-	decryptedData, decryptErr := rsa.EncryptPKCS1v15(rand.Reader, publicRsa, []byte(dataToEncrypt))
+	decryptedData, decryptErr := rsa.EncryptOAEP(c.getHash(), rand.Reader, pubRsa, []byte(dataToEncrypt), nil)
 	if decryptErr != nil {
 		fmt.Println("Decrypt data error")
 		panic(decryptErr)
 	}
 	decodedData := base64.StdEncoding.EncodeToString(decryptedData)
-	
 	return decodedData, nil
 }
